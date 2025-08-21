@@ -1,0 +1,14 @@
+{
+  "name": "PopovTaskWebpackMiddleFrontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yaroslav Popov <slava_popov_01@internet.ru>",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1"
+  }
+}

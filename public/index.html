@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather sounds</title>
+    <script defer src="../build/bundle.js"></script>
+    <link rel="stylesheet" href="../build/styles/index.css">
 </head>
 <body>
-    <h1>Weather sounds</h1>
+    <div class="backfiltered"></div>
+    <div id="root">
+        <div class="title"><h1>Weather sounds</h1></div>
+        <div class="sounds-container"></div>
+        <div class="volume-control">
+            <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.1" value="0.5">
+        </div>
+    </div>
 </body>
 </html>

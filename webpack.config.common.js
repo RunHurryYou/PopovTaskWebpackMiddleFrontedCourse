@@ -1,6 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const { default: postcss } = require('postcss');
 
 module.exports = {
     context: path.resolve(__dirname, "src"),
@@ -21,6 +23,35 @@ module.exports = {
                     to: path.resolve(__dirname, "build/assets")
                 }
             ]
-        })
+        }),
+        new MiniCssExtractPlugin(),
     ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use:[
+                        MiniCssExtractPlugin.loader,
+                        "css-loader",
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                postcssOptions: {
+                                    plugins: [require('postcss-preset-env')]
+                                }
+                            }
+                        },
+                        'sass-loader'
+                    ],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+            },
+        ],
+    },
 };

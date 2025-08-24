@@ -1,4 +1,5 @@
 import {data} from './data';
+import './index.scss';
 
 const soundsContainer = document.querySelector('.sounds-container');
 const backFiltered = document.querySelector('.backfiltered');

@@ -10,9 +10,13 @@
   "author": "Yaroslav Popov <slava_popov_01@internet.ru>",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.34.0",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
+    "eslint": "^9.34.0",
+    "eslint-webpack-plugin": "^5.0.2",
+    "globals": "^16.3.0",
     "html-webpack-plugin": "^5.6.4",
     "mini-css-extract-plugin": "^2.9.4",
     "postcss": "^8.5.6",

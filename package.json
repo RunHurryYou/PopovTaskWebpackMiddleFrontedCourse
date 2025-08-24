@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx webpack --mode development",
+    "build": "npx webpack --mode production"
   },
   "author": "Yaroslav Popov <slava_popov_01@internet.ru>",
   "license": "MIT",
   "devDependencies": {
+    "html-webpack-plugin": "^5.6.4",
     "webpack": "^5.101.3",
     "webpack-cli": "^6.0.1"
   }

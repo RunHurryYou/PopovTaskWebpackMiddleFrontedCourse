@@ -6,7 +6,7 @@ const { default: postcss } = require('postcss');
 
 module.exports = {
     context: path.resolve(__dirname, "src"),
-    entry: "./index.js",
+    entry: "./index.ts",
     output: {
         filename: "[name].[contenthash].js",
         path: path.resolve(__dirname, "build"),
@@ -51,6 +51,11 @@ module.exports = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 type: 'asset/resource',
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             },
         ],
     },

@@ -12,6 +12,12 @@ module.exports = {
         path: path.resolve(__dirname, "build"),
         clean: true
     },
+    resolve: {
+    extensions: ['.tsx', '.ts', '.js'], // .ts должен быть в списке
+    alias: {
+      '@': path.resolve(__dirname, 'src/')
+    }
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "public/index.html")

@@ -6,11 +6,17 @@ const { default: postcss } = require('postcss');
 
 module.exports = {
     context: path.resolve(__dirname, "src"),
-    entry: "./index.js",
+    entry: "./index.ts",
     output: {
         filename: "[name].[contenthash].js",
         path: path.resolve(__dirname, "build"),
         clean: true
+    },
+    resolve: {
+    extensions: ['.tsx', '.ts', '.js'], // .ts должен быть в списке
+    alias: {
+      '@': path.resolve(__dirname, 'src/')
+    }
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -51,6 +57,11 @@ module.exports = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 type: 'asset/resource',
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             },
         ],
     },

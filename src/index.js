@@ -17,9 +17,8 @@ function playAudio(audioFile, id) {
         if (currentCard) {
             const icon = currentCard.querySelector('img');
             if (icon) {
-                if(id === 1) icon.src = "./assets/icons/cloud-rain.svg";
-                else if(id === 2) icon.src = "./assets/icons/cloud-snow.svg";
-                else if(id === 3) icon.src = "./assets/icons/sun.svg";
+                const itemData = data.find(item => item.id === id);
+                icon.src = `./assets/icons/${itemData.icon_name}`;
             }
         }
         
@@ -36,9 +35,8 @@ function playAudio(audioFile, id) {
         if (prevCard) {
             const icon = prevCard.querySelector('img');
             if (icon) {
-                if(currentAudioId === 1) icon.src = "./assets/icons/cloud-rain.svg";
-                else if(currentAudioId === 2) icon.src = "./assets/icons/cloud-snow.svg";
-                else if(currentAudioId === 3) icon.src = "./assets/icons/sun.svg";
+                const prevItemData = data.find(item => item.id === currentAudioId);
+                icon.src = `./assets/icons/${prevItemData.icon_name}`;
             }
         }
     }
@@ -74,34 +72,13 @@ function renderItem(item){
     div.classList.add('card');
     div.setAttribute('data-id', item.id);
 
-    let iconSrc = '';
-    
-    if(item.id === 1){
-        div.style.backgroundImage = 'url("./assets/rainy-bg.jpg")';
-        iconSrc = './assets/icons/cloud-rain.svg';
-    }
-    else if(item.id === 2){
-        div.style.backgroundImage = 'url("./assets/winter-bg.jpg")';
-        iconSrc = './assets/icons/cloud-snow.svg';
-    }
-    else if(item.id === 3){
-        div.style.backgroundImage = 'url("./assets/summer-bg.jpg")';
-        iconSrc = './assets/icons/sun.svg';
-    }
+    div.style.backgroundImage = `url("./assets/${item.background}")`;
+    const iconSrc = `./assets/icons/${item.icon_name}`;
 
     div.innerHTML = `<img src="${iconSrc}" alt="${item.name || 'sound'}">`;
     
     div.onclick = function() {
-        // Меняем фон
-        if(item.id === 1){
-            backFiltered.style.backgroundImage = 'url("./assets/rainy-bg.jpg")';
-        }
-        else if(item.id === 2){
-            backFiltered.style.backgroundImage = 'url("./assets/winter-bg.jpg")';
-        }
-        else if(item.id === 3){
-            backFiltered.style.backgroundImage = 'url("./assets/summer-bg.jpg")';
-        }
+        backFiltered.style.backgroundImage = `url("./assets/${item.background}")`;
         
         if (item.audio) {
             playAudio(item.audio, item.id);

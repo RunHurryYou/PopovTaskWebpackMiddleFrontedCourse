@@ -1,24 +1,25 @@
 import {data} from './data';
 import './index.scss';
+import { IAudioPositions, IDataItem } from './types/types';
 
-const soundsContainer = document.querySelector('.sounds-container');
-const backFiltered = document.querySelector('.backfiltered');
+const soundsContainer = document.querySelector('.sounds-container') as HTMLDivElement;
+const backFiltered = document.querySelector('.backfiltered') as HTMLDivElement;
 
-let currentAudio = null;
-let currentAudioId = null;
-let audioPositions = {};
+let currentAudio: HTMLAudioElement | null = null;
+let currentAudioId: number | null = null;
+let audioPositions: IAudioPositions = {};
 
-function playAudio(audioFile, id) {
-    if(currentAudioId === id) {
+function playAudio(audioFile: string, id: number) {
+    if(currentAudioId === id && currentAudio !== null) {
         audioPositions[id] = currentAudio.currentTime;
         currentAudio.pause();
-        
         const currentCard = document.querySelector(`.card[data-id="${id}"]`);
         if (currentCard) {
             const icon = currentCard.querySelector('img');
             if (icon) {
                 const itemData = data.find(item => item.id === id);
-                icon.src = `./assets/icons/${itemData.icon_name}`;
+                if(itemData)
+                    icon.src = `./assets/icons/${itemData.icon_name}`;
             }
         }
         
@@ -28,7 +29,8 @@ function playAudio(audioFile, id) {
     }
     
     if (currentAudio) {
-        audioPositions[currentAudioId] = currentAudio.currentTime;
+        if(currentAudioId!== null )
+            audioPositions[currentAudioId] = currentAudio.currentTime;
         currentAudio.pause();
         
         const prevCard = document.querySelector(`.card[data-id="${currentAudioId}"]`);
@@ -36,7 +38,8 @@ function playAudio(audioFile, id) {
             const icon = prevCard.querySelector('img');
             if (icon) {
                 const prevItemData = data.find(item => item.id === currentAudioId);
-                icon.src = `./assets/icons/${prevItemData.icon_name}`;
+                if(prevItemData)
+                    icon.src = `./assets/icons/${prevItemData.icon_name}`;
             }
         }
     }
@@ -51,9 +54,9 @@ function playAudio(audioFile, id) {
         currentAudio.currentTime = 0;
     }
     
-    const volumeSlider = document.querySelector('.volume-slider');
+    const volumeSlider = document.querySelector('.volume-slider') as HTMLInputElement;
     if (volumeSlider) {
-        currentAudio.volume = volumeSlider.value;
+        currentAudio.volume = parseFloat(volumeSlider.value);
     }
     
     const currentCard = document.querySelector(`.card[data-id="${id}"]`);
@@ -67,18 +70,19 @@ function playAudio(audioFile, id) {
     currentAudio.play();
 }
 
-function renderItem(item){
+function renderItem(item: IDataItem) {
     const div = document.createElement('div');
     div.classList.add('card');
-    div.setAttribute('data-id', item.id);
+    div.setAttribute('data-id', String(item.id));
 
     div.style.backgroundImage = `url("./assets/${item.background}")`;
     const iconSrc = `./assets/icons/${item.icon_name}`;
 
-    div.innerHTML = `<img src="${iconSrc}" alt="${item.name || 'sound'}">`;
+    div.innerHTML = `<img src="${iconSrc}" alt="${item.id || 'sound'}">`;
     
     div.onclick = function() {
-        backFiltered.style.backgroundImage = `url("./assets/${item.background}")`;
+        if(backFiltered !== null)
+            backFiltered.style.backgroundImage = `url("./assets/${item.background}")`;
         
         if (item.audio) {
             playAudio(item.audio, item.id);
@@ -89,13 +93,14 @@ function renderItem(item){
 }
 
 function createVolumeControl() {
-    const slider = document.querySelector('#volume-slider');
-    
-    slider.addEventListener('input', function() {
-        if (currentAudio) {
-            currentAudio.volume = this.value;
-        }
-    });
+    const slider = document.querySelector('#volume-slider') as HTMLInputElement;
+
+    if(slider)
+        slider.addEventListener('input', function() {
+            if (currentAudio) {
+                currentAudio.volume = parseFloat(this.value);
+            }
+        });
 }
 
 function main(){
